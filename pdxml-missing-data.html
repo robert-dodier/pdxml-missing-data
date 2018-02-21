@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Introduction to Bayesian Inference in R</title>
+    <title>Strategies for handling missing data in modeling and prediction</title>
     <meta charset="utf-8">
     <style>
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
@@ -33,6 +33,41 @@ This document and associated material is on Github:
 
 ---
 # Common missing data scenarios
+
+--
+ * Missing data in prediction
+
+--
+  * ML models typically compute something like `\(P(y \mid x_1, x_2, x_3, \ldots)\)`
+
+--
+  * What if some `\(x_k\)` is unknown?
+
+--
+  * Need to somehow compensate for `\(x_k\)` with variables which are present
+
+--
+  * Spoiler alert! Right thing to do is to average over possible values
+
+---
+# Common missing data scenarios, cont'd
+
+ * Missing data in training
+
+--
+  * "Training" == adjusting parameters to better fit available data
+
+--
+  * Data typically == list of tuples of variables `\((x_1, x_2, x_3, \ldots, y)\)`
+
+--
+  * Each tuple makes some contribution to the overall goodness of fit
+
+--
+  * How to compute the contribution when some tuples have missing values?
+
+--
+  * Spoiler alert! Again, right thing to do is to average over possible values
 
 ---
 # A Bayesian framework for approaching missing data problems
@@ -86,8 +121,8 @@ This document and associated material is on Github:
 # Worked examples of specific problems
 
     </textarea>
-    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
-    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
     <script type="text/javascript">
       var slideshow = remark.create();
 
