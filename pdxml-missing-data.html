@@ -25,6 +25,7 @@ class: center, middle
 ## Robert Dodier
 
 This document and associated material is on Github:
+
 [robert-dodier/pdxml-missing-data](https://github.com/robert-dodier/pdxml-missing-data)
 
 ---
@@ -36,15 +37,17 @@ This document and associated material is on Github:
 ---
 # A Bayesian framework for approaching missing data problems
 
- * A Bayesian framework for approaching missing data problems
+--
+ * "Bayesian" = model all uncertainties as probabilities
 
-  * "Bayesian" = model all uncertainties as probabilities
+--
+ * consistent strategy: compute conditional probability given what you know, and averaging over what you don't know
 
-  * consistent strategy: compute conditional probability given what you know, and averaging over what you don't know
+--
+ * Averaging means integrating -- this can be computationally intensive
 
-  * Averaging means integrating -- this can be computationally intensive
-
-  * ... but you always know what you're aiming for
+--
+ * ... but you always know what you're aiming for
 
 ---
 # An aside about Bayesian inference
@@ -55,12 +58,14 @@ This document and associated material is on Github:
 ---
 # Looking at conventional heuristics from a Bayesian point of view
 
+--
  * Single imputation
 
   * replace missing value with per-variable mean or most common value
 
   * something like approximating integral with one-point sample
 
+--
  * Multiple imputation
 
   * sample from marginal distribution
@@ -69,10 +74,12 @@ This document and associated material is on Github:
 
   * multiple imputation is essentially same as Bayesian approach
 
+--
  * "Hot deck" imputation -- replace with most similar complete record
 
   * something like sampling from empirical conditional distribution
 
+--
  * One model per combination of missing variables
 
 ---
