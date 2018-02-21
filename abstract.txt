@@ -1,0 +1,13 @@
+Title: "Strategies for handling missing data in modeling and prediction"
+
+Abstract: Machine learning models are typically phrased in terms of
+input and output data, and, often enough, some data have missing
+(i.e., unknown) values. I'll talk about some common missing data
+scenarios, and present a general Bayesian framework for working with
+missing data. I'll show how solutions for specific scenarios can be
+derived from the general framework, and I'll note how conventional
+heuristics for missing data can be understood from a Bayesian point of
+view. Finally I'll present a few worked examples to illustrate
+specific problems and their solutions. This presentation will be light
+on the math, with an emphasis on the many interesting concepts in play
+here.

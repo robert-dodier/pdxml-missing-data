@@ -1,0 +1,27 @@
+Strategies for handling missing data in modeling and prediction
+
+ * What are missing data?
+
+ * Common missing data scenarios
+
+ * A Bayesian framework for approaching missing data problems
+ ** "Bayesian" = model all uncertainties as probabilities
+ ** consistent strategy: compute conditional probability given what you know, and averaging over what you don't know
+ ** Averaging means integrating -- this can be computationally intensive
+ ** ... but you always know what you're aiming for
+
+ * Solutions for specific problems derived from general framework
+
+ * Looking at conventional heuristics from a Bayesian point of view
+ ** Single imputation
+ *** replace missing value with per-variable mean or most common value
+ *** something like approximating integral with one-point sample
+ ** Multiple imputation
+ *** sample from marginal distribution
+ *** sample from distribution conditional on other variables
+ *** multiple imputation is essentially same as Bayesian approach
+ ** "Hot deck" imputation -- replace with most similar complete record
+ *** something like sampling from empirical conditional distribution
+ ** One model per combination of missing variables
+
+ * Worked examples of specific problems
