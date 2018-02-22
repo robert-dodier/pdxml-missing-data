@@ -94,7 +94,22 @@ This document and associated material is on Github:
  * ... but you always know what you're aiming for
 
 ---
-# An aside about Bayesian inference
+# Applying the Bayesian framework
+
+--
+ * When some `$x$`'s are missing, and some are present,
+ our goal is to find `\(P(y \mid \mathrm{present})\)`
+
+--
+ * Given a model `\(P(y \mid \mathrm{missing}, \mathrm{present})\)`
+
+--
+ * we find `\(P(y \mid \mathrm{present})\)` by averaging over the missing variables:
+ integrate `\(P(y \mid \mathrm{missing}, \mathrm{present}) P(\mathrm{missing}\mid \mathrm{present})\)` over missing
+
+--
+ * Key part of puzzle `\(P(\mathrm{missing} \mid \mathrm{present})\)`,
+ i.e. model of the relationship of missing and present
 
 ---
 # Solutions for specific problems derived from the general framework
@@ -113,7 +128,7 @@ This document and associated material is on Github:
 --
   * something like approximating integral with one-point sample
 
---
+---
 ## Multiple imputation
 
   * sample from marginal distribution
@@ -124,13 +139,13 @@ This document and associated material is on Github:
 --
   * multiple imputation is essentially same as Bayesian approach
 
---
+---
 ## "Hot deck" imputation -- replace with most similar complete record
 
 --
   * something like sampling from empirical conditional distribution
 
---
+---
 ## Multiple models
 
 --
