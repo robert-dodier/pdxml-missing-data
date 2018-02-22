@@ -149,11 +149,11 @@ This document and associated material is on Github:
 
 --
 
- * Maximum likelihood estimation with missing data
+ * Value of information &mdash; measured in bits
 
 --
 
-  * Expectation-maximization (EM) algorithms
+  * If you could observe an additional variable, which one?
 
 --
 
@@ -164,7 +164,35 @@ This document and associated material is on Github:
   * Bayesian (directed) and Markov (undirected) networks
 
 ---
-# Solutions for specific problems derived from the general framework
+# Solutions derived from the general framework
+
+--
+
+ * Prediction: integrate output over missing variables
+
+--
+
+---
+# Solutions derived from the general framework
+
+ * Training: integrate likelihood term over missing variables
+
+--
+
+ * Maximum likelihood estimation. Log likelihood with complete data looks like:
+ `\(\log P(y_1\mid x_{1,1}, x_{1,2}) + \ldots + \log P(y_n\mid x_{n,1}, x_{n,2})\)`
+
+--
+
+ * Missing data: replace `$k$`'th term with `\(\log \int P(y_k\mid x_{k,1}, x_{k,2}) P(x_{k,2}\mid x_{k,1}) dx_2\)`
+
+--
+
+  * log-integral-likelihood causes trouble &mdash; not same as integral-log-likelihood
+
+--
+
+  * Expectation-maximization (EM) algorithms can help here
 
 ---
 # Looking at conventional heuristics from a Bayesian point of view
