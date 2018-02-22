@@ -259,15 +259,50 @@ This document and associated material is on Github:
 --
 
  * and `\(u(x_1, x_2) = a_1 x_1 + a_2 x_2 + b\)`
+  * Let `$a_1 = 4/3, a_2 = -1/6, b = -35/12$`
 
 --
 
- * Suppose `\(x_2\)` is missing.
+ * Class 0 has mean `$\mu_0 = (1, 0)$`, class 1 has mean `$\mu_1 = (7/2, 1)$`
+
+ * Same covariance `$\Sigma = (2, 1; 1, 2)$`
+
+---
+# Worked example: missing variable in classification
+
+![Scatterplot showing data for two-class problem](two-class-scatterplot.svg)
+
+---
+# Worked example: missing variable in classification
+
+![Contours of equal posterior probability of class 1](two-class-pcx-contours.svg)
+
+---
+# Worked example: missing variable in classification
+
+ * With both variables present, we compute `\(P(c = 1\mid x_1, x_2)\)`
+
+ * Suppose `\(x_2\)` is missing
+
+ * Now we must compute `\(P(c = 1\mid x_1)\)`
 
 ---
 # Worked example: missing variable in classification
 
  * Gold-standard result: integrate output over missing variable weighted by `\(P(x_2\mid x_1)\)`.
+
+--
+
+ `\(P(c=1\mid x_1) = {{e^{{{7\,{\it x_1}}\over{4}}+{{1}\over{4}}}}\over{e^{{{7\,
+  {\it x_1}}\over{4}}+{{1}\over{4}}}+e^{{{{\it x_1}}\over{2}}+{{49
+   }\over{16}}}}}\)`
+
+---
+# Worked example: missing variable in classification
+
+ * Gold-standard result: integrate output over missing variable weighted by `\(P(x_2\mid x_1)\)`.
+
+<img src="post-class1-given-only-x1.svg" width="80%"/>
 
 ---
 # Worked example: missing variable in classification

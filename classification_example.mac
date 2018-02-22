@@ -58,3 +58,6 @@ pcx1 (x1) := ''(integrate (pcx(x1, x2) * px2_x1(x1, x2), x2, minf, inf));
 
 plot2d (pcx1, [x1, -4, 8], [legend, false], [svg_file, "post-class1-given-only-x1.svg"]);
 
+ratsimp (pcx1(x1));
+tex(%);
+
