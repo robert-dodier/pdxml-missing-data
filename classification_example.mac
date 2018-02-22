@@ -4,8 +4,8 @@ fpprintprec : 6;
 S : matrix([2, 1], [1, 2]);
 eigenvalues(S);
 
-mu0 : [0, 1];
-mu1 : [1, 7/2];
+mu0 : [1, 0];
+mu1 : [7/2, 1];
 L : cholesky(S);
 load (distrib);
 
@@ -34,7 +34,7 @@ u(x1, x2) := a[1]*x1 + a[2]*x2 + b;
 /* posterior class probability */
 pcx (x1, x2) := 1/(1 + exp(-u(x1, x2)));
 
-contour_plot (pcx, [x1, -5, 6], [x2, -4, 8],
+contour_plot (pcx, [x1, -4, 8], [x2, -5, 6],
               [gnuplot_postamble, "set size ratio -1"],
               [svg_file, "two-class-pcx-contours.svg"]);
 
@@ -59,7 +59,7 @@ px2(x1) := ''(ratsimp (integrate (px1x2(x1, x2), x1, minf, inf)));
 /* posterior class probability given only x1 */
 pcx1 (x1) := ''(integrate (pcx(x1, x2) * px2_x1(x1, x2), x2, minf, inf));
 
-plot2d (pcx1, [x1, -5, 6], [legend, false], [svg_file, "post-class1-given-only-x1.svg"]);
+plot2d (pcx1, [x1, -4, 8], [legend, false], [svg_file, "post-class1-given-only-x1.svg"]);
 
 ratsimp (pcx1(x1));
 tex(%);
@@ -68,9 +68,9 @@ tex(%);
 
 approximation1 : ratsimp (integrate (pcx(x1, x2) * px2(x2), x2, minf, inf));
 
-pcx1_approx1(x1) := quad_qags (pcx(x1, x2) * px2(x2), x2, -20, +20)[1];
+pcx1_approx1(x1) := quad_qags (pcx(x1, x2) * px2(x2), x2, -10, +10)[1];
 
-plot2d (pcx1_approx1, [x1, -5, 6], [legend, false], [svg_file, "post-class1-given-only-x1-approx1.svg"]);
+plot2d (pcx1_approx1, [x1, -4, 8], [legend, false], [svg_file, "post-class1-given-only-x1-approx1.svg"]);
 
 /* simpler approximation #2: replace x2 by its mean conditional on x1 */
 
@@ -78,7 +78,7 @@ mean_x2_x1(x1) := ''(ratsimp (integrate (px2_x1(x1, x2) * x2, x2, minf, inf)));
 
 pcx1_approx2(x1) := pcx(x1, mean_x2_x1(x1));
 
-plot2d (pcx1_approx2, [x1, -5, 6], [legend, false], [svg_file, "post-class1-given-only-x1-approx2.svg"]);
+plot2d (pcx1_approx2, [x1, -4, 8], [legend, false], [svg_file, "post-class1-given-only-x1-approx2.svg"]);
 
 /* simplest approximation: replace x2 by its unconditional mean */
 
@@ -86,10 +86,10 @@ mean_x2 : integrate (px2(x2) * x2, x2, minf, inf);
 
 pcx1_approx3(x1) := pcx(x1, mean_x2);
 
-plot2d (pcx1_approx3, [x1, -5, 6], [legend, false], [svg_file, "post-class1-given-only-x1-approx3.svg"]);
+plot2d (pcx1_approx3, [x1, -4, 8], [legend, false], [svg_file, "post-class1-given-only-x1-approx3.svg"]);
 
 /* plot gold standard + all approximations */
 
-plot2d ([pcx1, pcx1_approx1, pcx1_approx2, pcx1_approx3], [x1, -5, 6],
+plot2d ([pcx1, pcx1_approx1, pcx1_approx2, pcx1_approx3], [x1, -4, 8],
         [style, [lines, 1, 1], [lines, 1, 1], [lines, 1, 1], [lines, 1, 1]],
         [legend, false], [svg_file, "post-class1-given-only-x1-gold-std+all-approx.svg"]);
