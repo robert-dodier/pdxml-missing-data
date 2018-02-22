@@ -133,7 +133,7 @@ This document and associated material is on Github:
  i.e. model of the relationship of missing and present
 
 ---
-# Solutions derived from the general framework
+# Applying the Bayesian framework
 
 --
 
@@ -141,8 +141,18 @@ This document and associated material is on Github:
 
 --
 
+ * Straightforward application of general concept
+
+  * Given model `\(P(y \mid x_1, x_2)\)`
+
+  * compute `\(P(y \mid x_1) = \int P(y\mid x_1, x_2) P(x_2 \mid x_1) dx_2\)`
+
+  * making use of missing and present relationship `\(P(x_2 \mid x_1)\)`
+
+--
+
 ---
-# Solutions derived from the general framework
+# Applying the Bayesian framework
 
  * Training: integrate likelihood term over missing variables
 
