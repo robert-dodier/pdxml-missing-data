@@ -31,8 +31,30 @@ a : [a[1,1], a[1,2]];
 b : (1/2)*(mu0 . Sinv . mu0) - (1/2)*(mu1 . Sinv . mu1);
 
 u(x1, x2) := a[1]*x1 + a[2]*x2 + b;
+/* posterior class probability */
 pcx (x1, x2) := 1/(1 + exp(-u(x1, x2)));
 
 contour_plot (pcx, [x1, -4, 8], [x2, -5, 6],
               [gnuplot_postamble, "set size ratio -1"],
               [svg_file, "two-class-pcx-contours.svg"]);
+
+/* conditional density of x2 given x1 */
+px2_x1(x1, x2) := px1x2(x1, x2) / px1(x1);
+
+/* joint density of x1 and x2; assume p(c=0) = p(c=1) = 1/2 */
+px1x2(x1, x2) := px1x2_c0(x1, x2)*(1/2) + px1x2_c1(x1, x2)*(1/2);
+
+/* joint density of x1 and x2 conditional on c = 0 */
+px1x2_c0(x1, x2) := exp(-(1/2)*([x1, x2] - mu0) . Sinv . ([x1, x2] - mu0))/sqrt(determinant(S))/(2*%pi);
+
+/* joint density of x1 and x2 conditional on c = 1 */
+px1x2_c1(x1, x2) := exp(-(1/2)*([x1, x2] - mu1) . Sinv . ([x1, x2] - mu1))/sqrt(determinant(S))/(2*%pi);
+
+/* marginal density of x1 */
+px1(x1) := ''(expand (integrate (px1x2(x1, x2), x2, minf, inf)));
+
+/* posterior class probability given only x1 */
+pcx1 (x1) := ''(integrate (pcx(x1, x2) * px2_x1(x1, x2), x2, minf, inf));
+
+plot2d (pcx1, [x1, -4, 8], [legend, false], [svg_file, "post-class1-given-only-x1.svg"]);
+
