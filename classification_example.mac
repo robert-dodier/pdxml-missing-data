@@ -1,0 +1,38 @@
+linel : 120;
+fpprintprec : 6;
+
+S : matrix([2, 1], [1, 2]);
+eigenvalues(S);
+
+mu0 : [1, 0];
+mu1 : [7/2, 1];
+L : cholesky(S);
+load (distrib);
+
+xx0:makelist(float(L . [random_normal(0,1),random_normal(0,1)]+mu0),i,1,200);
+xx1:makelist(float(L . [random_normal(0,1),random_normal(0,1)]+mu1),i,1,200);
+
+xx0 : map(lambda([m],[m[1,1],m[2,1]]),xx0);
+xx1 : map(lambda([m],[m[1,1],m[2,1]]),xx1);
+
+maxima_tempdir : "/home/robert/playpen/github/pdxml-missing-data";
+
+plot2d([[discrete, xx0], [discrete, xx1]],
+       [legend, "class 0", "class 1"],
+       [xlabel, "x_1"],
+       [ylabel, "x_2"],
+       [gnuplot_postamble, "set size ratio -1"],
+       [style, [points, 0.8], [points, 0.8]],
+       [svg_file, "two-class-scatterplot.svg"]);
+
+Sinv : invert(S);
+a : (mu1 - mu0) . Sinv;
+a : [a[1,1], a[1,2]];
+b : (1/2)*(mu0 . Sinv . mu0) - (1/2)*(mu1 . Sinv . mu1);
+
+u(x1, x2) := a[1]*x1 + a[2]*x2 + b;
+pcx (x1, x2) := 1/(1 + exp(-u(x1, x2)));
+
+contour_plot (pcx, [x1, -4, 8], [x2, -5, 6],
+              [gnuplot_postamble, "set size ratio -1"],
+              [svg_file, "two-class-pcx-contours.svg"]);
