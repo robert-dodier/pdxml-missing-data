@@ -37,7 +37,7 @@
 	<path stroke='gray' stroke-dasharray=' 2,4'  d='M63.0,406.6 L570.8,406.6 M293.8,406.6 L293.8,25.7  h0.01'/></g>
 <g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
 	<path stroke='black'  d='M63.0,25.7 L63.0,406.6 L570.8,406.6 L570.8,25.7 L63.0,25.7 Z  h0.01'/>	<g transform="translate(316.9,464.3)" style="stroke:none; fill:black; font-family:Arial; font-size:14.00pt; text-anchor:middle">
-		<text>x1</text>
+		<text>x2</text>
 	</g>
 </g>
 	<g id="gnuplot_plot_1" ><title>gnuplot_plot_1</title>

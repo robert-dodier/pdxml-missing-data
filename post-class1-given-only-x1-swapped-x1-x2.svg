@@ -37,10 +37,10 @@
 	<path stroke='gray' stroke-dasharray=' 2,4'  d='M84.0,398.7 L570.8,398.7 M305.3,398.7 L305.3,33.6  h0.01'/></g>
 <g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
 	<path stroke='black'  d='M84.0,33.6 L84.0,398.7 L570.8,398.7 L570.8,33.6 L84.0,33.6 Z  h0.01'/>	<g transform="translate(20.5,216.2) rotate(270)" style="stroke:none; fill:black; font-family:Arial; font-size:14.00pt; text-anchor:middle">
-		<text>pcx1</text>
+		<text>pcx2</text>
 	</g>
 	<g transform="translate(327.4,456.4)" style="stroke:none; fill:black; font-family:Arial; font-size:14.00pt; text-anchor:middle">
-		<text>x1</text>
+		<text>x2</text>
 	</g>
 </g>
 	<g id="gnuplot_plot_1" ><title>gnuplot_plot_1</title>
