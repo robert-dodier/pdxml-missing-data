@@ -23,7 +23,7 @@ plot2d([[discrete, xx0], [discrete, xx1]],
        [ylabel, "x_2"],
        [gnuplot_postamble, "set size ratio -1"],
        [style, [points, 0.8], [points, 0.8]],
-       [svg_file, "two-class-scatterplot.svg"]);
+       [svg_file, "tmp-two-class-scatterplot.svg"]);
 
 Sinv : invert(S);
 a : (mu1 - mu0) . Sinv;
@@ -36,60 +36,60 @@ pcx (x1, x2) := 1/(1 + exp(-u(x1, x2)));
 
 contour_plot (pcx, [x1, -4, 8], [x2, -5, 6],
               [gnuplot_postamble, "set size ratio -1"],
-              [svg_file, "two-class-pcx-contours.svg"]);
+              [svg_file, "tmp-two-class-pcx-contours.svg"]);
 
-/* conditional density of x2 given x1 */
-px2_x1(x1, x2) := px1x2(x1, x2) / px1(x1);
+/* conditional density of x1 given x2 */
+px1_x2(x1, x2) := px2x1(x1, x2) / px2(x2);
 
-/* joint density of x1 and x2; assume p(c=0) = p(c=1) = 1/2 */
-px1x2(x1, x2) := px1x2_c0(x1, x2)*(1/2) + px1x2_c1(x1, x2)*(1/2);
+/* joint density of x2 and x1; assume p(c=0) = p(c=1) = 1/2 */
+px2x1(x1, x2) := px2x1_c0(x1, x2)*(1/2) + px2x1_c1(x1, x2)*(1/2);
 
-/* joint density of x1 and x2 conditional on c = 0 */
-px1x2_c0(x1, x2) := exp(-(1/2)*([x1, x2] - mu0) . Sinv . ([x1, x2] - mu0))/sqrt(determinant(S))/(2*%pi);
+/* joint density of x2 and x1 conditional on c = 0 */
+px2x1_c0(x1, x2) := exp(-(1/2)*([x1, x2] - mu0) . Sinv . ([x1, x2] - mu0))/sqrt(determinant(S))/(2*%pi);
 
-/* joint density of x1 and x2 conditional on c = 1 */
-px1x2_c1(x1, x2) := exp(-(1/2)*([x1, x2] - mu1) . Sinv . ([x1, x2] - mu1))/sqrt(determinant(S))/(2*%pi);
-
-/* marginal density of x1 */
-px1(x1) := ''(expand (integrate (px1x2(x1, x2), x2, minf, inf)));
+/* joint density of x2 and x1 conditional on c = 1 */
+px2x1_c1(x1, x2) := exp(-(1/2)*([x1, x2] - mu1) . Sinv . ([x1, x2] - mu1))/sqrt(determinant(S))/(2*%pi);
 
 /* marginal density of x2 */
-px2(x1) := ''(ratsimp (integrate (px1x2(x1, x2), x1, minf, inf)));
+px2(x2) := ''(expand (integrate (px2x1(x1, x2), x1, minf, inf)));
 
-/* posterior class probability given only x1 */
-pcx1 (x1) := ''(integrate (pcx(x1, x2) * px2_x1(x1, x2), x2, minf, inf));
+/* marginal density of x1 */
+px1(x2) := ''(ratsimp (integrate (px2x1(x1, x2), x2, minf, inf)));
 
-plot2d (pcx1, [x1, -4, 8], [legend, false], [svg_file, "post-class1-given-only-x1.svg"]);
+/* posterior class probability given only x2 */
+pcx2 (x2) := ''(integrate (pcx(x1, x2) * px1_x2(x1, x2), x1, minf, inf));
 
-ratsimp (pcx1(x1));
+plot2d (pcx2, [x2, -4, 8], [legend, false], [svg_file, "tmp-post-class1-given-only-x2.svg"]);
+
+ratsimp (pcx2(x2));
 tex(%);
 
-/* simpler approximation #1: weight P(c=1|x1, x2) by P(x2) */
+/* simpler approximation #1: weight P(c=1|x1, x2) by P(x1) */
 
-approximation1 : ratsimp (integrate (pcx(x1, x2) * px2(x2), x2, minf, inf));
+approximation1 : ratsimp (integrate (pcx(x1, x2) * px1(x1), x1, minf, inf));
 
-pcx1_approx1(x1) := quad_qags (pcx(x1, x2) * px2(x2), x2, -10, +10)[1];
+pcx2_approx2(x2) := quad_qags (pcx(x1, x2) * px1(x1), x1, -20, +20)[1];
 
-plot2d (pcx1_approx1, [x1, -4, 8], [legend, false], [svg_file, "post-class1-given-only-x1-approx1.svg"]);
+plot2d (pcx2_approx2, [x2, -4, 8], [legend, false], [svg_file, "tmp-post-class1-given-only-x2-approx2.svg"]);
 
-/* simpler approximation #2: replace x2 by its mean conditional on x1 */
+/* simpler approximation #2: replace x1 by its mean conditional on x2 */
 
-mean_x2_x1(x1) := ''(ratsimp (integrate (px2_x1(x1, x2) * x2, x2, minf, inf)));
+mean_x1_x2(x2) := ''(ratsimp (integrate (px1_x2(x1, x2) * x1, x1, minf, inf)));
 
-pcx1_approx2(x1) := pcx(x1, mean_x2_x1(x1));
+pcx2_approx1(x2) := pcx(mean_x1_x2(x2), x2);
 
-plot2d (pcx1_approx2, [x1, -4, 8], [legend, false], [svg_file, "post-class1-given-only-x1-approx2.svg"]);
+plot2d (pcx2_approx1, [x2, -4, 8], [legend, false], [svg_file, "tmp-post-class1-given-only-x2-approx1.svg"]);
 
-/* simplest approximation: replace x2 by its unconditional mean */
+/* simplest approximation: replace x1 by its unconditional mean */
 
-mean_x2 : integrate (px2(x2) * x2, x2, minf, inf);
+mean_x1 : integrate (px1(x1) * x1, x1, minf, inf);
 
-pcx1_approx3(x1) := pcx(x1, mean_x2);
+pcx2_approx3(x2) := pcx(mean_x1, x2);
 
-plot2d (pcx1_approx3, [x1, -4, 8], [legend, false], [svg_file, "post-class1-given-only-x1-approx3.svg"]);
+plot2d (pcx2_approx3, [x2, -4, 8], [legend, false], [svg_file, "tmp-post-class1-given-only-x2-approx3.svg"]);
 
 /* plot gold standard + all approximations */
 
-plot2d ([pcx1, pcx1_approx1, pcx1_approx2, pcx1_approx3], [x1, -4, 8],
+plot2d ([pcx2, pcx2_approx2, pcx2_approx1, pcx2_approx3], [x2, -4, 8],
         [style, [lines, 1, 1], [lines, 1, 1], [lines, 1, 1], [lines, 1, 1]],
-        [legend, false], [svg_file, "post-class1-given-only-x1-gold-std+all-approx.svg"]);
+        [legend, false], [svg_file, "tmp-post-class1-given-only-x2-gold-std+all-approx.svg"]);
